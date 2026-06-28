@@ -23,7 +23,7 @@ const { product } = Astro.props;
   <section class="product-detail">
     <div class="product-image-col">
       {(() => {
-        const imgs = product.images?.length ? product.images : [product.image];
+        const imgs = product.images?.length ? [...product.images].reverse() : [product.image];
         return (
           <div class="image-viewer">
             <div class="thumbnail-strip">
