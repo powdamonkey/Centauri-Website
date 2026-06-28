@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Your Cart">
@@ -14,7 +15,7 @@ import Layout from '../layouts/Layout.astro';
     <!-- Empty state (shown by default, hidden when items exist) -->
     <div class="cart-empty" id="cart-empty">
       <p class="empty-msg">Your cart is empty.</p>
-      <a href="clothing" class="empty-link">CONTINUE SHOPPING</a>
+      <a href={`${base}clothing`} class="empty-link">CONTINUE SHOPPING</a>
     </div>
 
     <!-- Cart content (hidden by default, shown when items exist) -->
@@ -29,7 +30,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <p class="summary-note">Shipping calculated at checkout.</p>
         <button class="checkout-btn" id="checkout-btn">PROCEED TO CHECKOUT</button>
-        <a href="clothing" class="continue-link">CONTINUE SHOPPING</a>
+        <a href={`${base}clothing`} class="continue-link">CONTINUE SHOPPING</a>
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { products } from '../../data/products.js';
+const base = import.meta.env.BASE_URL;
 
 export function getStaticPaths() {
   return products.map(product => ({
@@ -14,7 +15,7 @@ const { product } = Astro.props;
 
 <Layout title={product.name}>
   <div class="breadcrumb">
-    <a href="clothing" class="breadcrumb-link">CLOTHING</a>
+    <a href={`${base}clothing`} class="breadcrumb-link">CLOTHING</a>
     <span class="breadcrumb-sep">—</span>
     <span class="breadcrumb-current">{product.name}</span>
   </div>

@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { products } from '../../data/products.js';
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Clothing">
@@ -21,7 +22,7 @@ import { products } from '../../data/products.js';
 
             {/* Transparent clickable layer — covers image, sits above slides */}
             <a
-              href={`clothing/${product.id}`}
+              href={`${base}clothing/${product.id}`}
               class="image-nav-link"
               aria-label={`View ${product.name}`}
             ></a>
@@ -72,7 +73,7 @@ import { products } from '../../data/products.js';
             )}
           </div>
 
-          <a href={`clothing/${product.id}`} class="product-info">
+          <a href={`${base}clothing/${product.id}`} class="product-info">
             <p class="product-name">{product.name}</p>
             <p class="product-price">${product.price}</p>
           </a>

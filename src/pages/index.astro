@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout heroPage={true}>
@@ -22,7 +23,7 @@ import Layout from '../layouts/Layout.astro';
       <h1 class="hero-title">
         CENTAURI<br />LIFTING CLUB
       </h1>
-      <a href="clothing" class="hero-cta">SHOP NOW</a>
+      <a href={`${base}clothing`} class="hero-cta">SHOP NOW</a>
     </div>
   </section>
 
@@ -40,7 +41,7 @@ import Layout from '../layouts/Layout.astro';
   <!-- Featured product -->
   <section class="featured">
     <div class="featured-image-wrap">
-      <img src="images/hypnos-tee.png" alt="HYPNOS TEE — front and back" class="featured-img" />
+      <img src={`${base}images/hypnos-tee.png`} alt="HYPNOS TEE — front and back" class="featured-img" />
     </div>
     <div class="featured-info">
       <p class="featured-collection">SUMMER '26 COLLECTION</p>
@@ -50,7 +51,7 @@ import Layout from '../layouts/Layout.astro';
         Oversized heavyweight tee in natural cream.
         Greek mythology inspired graphic on the back.
       </p>
-      <a href="clothing/hypnos-tee" class="featured-link">VIEW PRODUCT</a>
+      <a href={`${base}clothing/hypnos-tee`} class="featured-link">VIEW PRODUCT</a>
     </div>
   </section>
 </Layout>
