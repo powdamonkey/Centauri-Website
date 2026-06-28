@@ -100,7 +100,7 @@ import Layout from '../layouts/Layout.astro';
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const successEl = document.querySelector('[data-fs-success]') as HTMLElement;
-  const formErrorEl = document.querySelector('[data-fs-error]:not([data-fs-error=""])') as HTMLElement;
+  const formErrorEl = document.querySelector('.form-error-banner') as HTMLElement;
   const submitBtn = form.querySelector('[data-fs-submit-btn]') as HTMLButtonElement;
 
   form.addEventListener('submit', async (e) => {
@@ -108,7 +108,7 @@ import Layout from '../layouts/Layout.astro';
 
     // Clear previous errors
     formErrorEl.textContent = '';
-    form.querySelectorAll('[data-fs-error][data-fs-error!=""]').forEach(el => (el as HTMLElement).textContent = '');
+    form.querySelectorAll('.field-error').forEach(el => (el as HTMLElement).textContent = '');
     form.querySelectorAll('[data-fs-field]').forEach(el => el.removeAttribute('aria-invalid'));
 
     submitBtn.disabled = true;
