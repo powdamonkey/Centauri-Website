@@ -1,0 +1,269 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout heroPage={true}>
+  <!-- Hero: full-screen video with text overlay -->
+  <section class="hero">
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/images/hero-poster.jpg"
+    >
+      <!-- Drop your hero video file at public/videos/hero.mp4 -->
+      <source src="/videos/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">SUMMER '26 COLLECTION</p>
+      <h1 class="hero-title">
+        CENTAURI<br />LIFTING CLUB
+      </h1>
+      <a href="/clothing" class="hero-cta">SHOP NOW</a>
+    </div>
+  </section>
+
+  <!-- Brand statement -->
+  <section class="statement">
+    <div class="statement-inner">
+      <h2 class="statement-heading">TRAIN BEYOND THE ORDINARY</h2>
+      <p class="statement-body">
+        Built for those who pursue excellence beyond the gym.
+        Centauri Lifting Club creates premium athletic wear for the dedicated few.
+      </p>
+    </div>
+  </section>
+
+  <!-- Featured product -->
+  <section class="featured">
+    <div class="featured-image-wrap">
+      <img src="/images/hypnos-tee.png" alt="HYPNOS TEE — front and back" class="featured-img" />
+    </div>
+    <div class="featured-info">
+      <p class="featured-collection">SUMMER '26 COLLECTION</p>
+      <h2 class="featured-name">HYPNOS TEE</h2>
+      <p class="featured-price">$65</p>
+      <p class="featured-desc">
+        Oversized heavyweight tee in natural cream.
+        Greek mythology inspired graphic on the back.
+      </p>
+      <a href="/clothing/hypnos-tee" class="featured-link">VIEW PRODUCT</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    background: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.42);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: #fff;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+
+  .hero-title {
+    font-family: var(--font-brand);
+    font-size: clamp(38px, 7vw, 88px);
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    line-height: 1.12;
+    margin-bottom: 2.75rem;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 0.85rem 3.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    animation: fadeUp 1s ease 0.8s both;
+  }
+
+  .hero-cta:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ── Statement ── */
+  .statement {
+    background: var(--white);
+    padding: 7rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  .statement-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .statement-heading {
+    font-family: var(--font-brand);
+    font-size: clamp(16px, 2.5vw, 26px);
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    margin-bottom: 1.75rem;
+  }
+
+  .statement-body {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    color: #555;
+  }
+
+  /* ── Featured product ── */
+  .featured {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 620px;
+  }
+
+  .featured-image-wrap {
+    overflow: hidden;
+    background: var(--cream);
+  }
+
+  .featured-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+
+  .featured-image-wrap:hover .featured-img {
+    transform: scale(1.04);
+  }
+
+  .featured-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 5rem;
+    background: var(--off-white);
+  }
+
+  .featured-collection {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    color: var(--gray);
+    margin-bottom: 1rem;
+  }
+
+  .featured-name {
+    font-family: var(--font-brand);
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+
+  .featured-price {
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+    margin-bottom: 2rem;
+  }
+
+  .featured-desc {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.85;
+    letter-spacing: 0.03em;
+    color: #555;
+    max-width: 320px;
+    margin-bottom: 2.5rem;
+  }
+
+  .featured-link {
+    display: inline-block;
+    padding: 0.85rem 2.5rem;
+    background: var(--black);
+    color: var(--white);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    align-self: flex-start;
+    transition: opacity 0.2s;
+  }
+
+  .featured-link:hover {
+    opacity: 0.75;
+  }
+
+  @media (max-width: 768px) {
+    .featured {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-image-wrap {
+      min-height: 320px;
+    }
+
+    .featured-info {
+      padding: 3rem 2rem;
+    }
+  }
+</style>

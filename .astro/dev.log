@@ -1,0 +1,128 @@
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Generated 0ms","label":"types","level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
+{"message":" astro  v7.0.3 ready in 894 ms\n┃ Local    http://localhost:4321/\n┃ Network  use --host to expose","label":"SKIP_FORMAT","level":"info"}
+{"message":"watching for file changes...","label":null,"level":"info"}
+{"message":"[200] / 13ms","label":null,"level":"info"}
+{"message":"[200] / 10ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 32ms","label":null,"level":"info"}
+{"message":"[404] /videos/hero.mp4 1ms","label":null,"level":"info"}
+{"message":"[200] / 2ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 0ms","label":null,"level":"info"}
+{"message":"[404] /videos/hero.mp4 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing 6ms","label":null,"level":"info"}
+{"message":"[200] /cart 7ms","label":null,"level":"info"}
+{"message":"[200] / 3ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[404] /videos/hero.mp4 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing 6ms","label":null,"level":"info"}
+{"message":"[200] / 10ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 2ms","label":null,"level":"info"}
+{"message":"[404] /videos/hero.mp4 0ms","label":null,"level":"info"}
+{"message":"[200] / 12ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing 8ms","label":null,"level":"info"}
+{"message":"[200] / 20ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] / 6ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 2ms","label":null,"level":"info"}
+{"message":"[200] /clothing 12ms","label":null,"level":"info"}
+{"message":"[200] / 28ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing 10ms","label":null,"level":"info"}
+{"message":"src/pages/clothing.astro","label":"watch","level":"info"}
+{"message":"[404] /clothing 4ms","label":null,"level":"info"}
+{"message":"src/components/Navbar.astro","label":"watch","level":"info"}
+{"message":"/src/pages/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"/src/pages/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"/src/pages/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] /clothing 9ms","label":null,"level":"info"}
+{"message":"[200] /clothing 3ms","label":null,"level":"info"}
+{"message":"[console.error] Astro Error while running audit's match function: TypeError: Failed to fetch","label":"vite","level":"error"}
+{"message":"[200] / 8ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 0ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 10ms","label":null,"level":"info"}
+{"message":"[200] /clothing 8ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 4ms","label":null,"level":"info"}
+{"message":"[200] /clothing 6ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 7ms","label":null,"level":"info"}
+{"message":"[200] / 6ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 2ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 8ms","label":null,"level":"info"}
+{"message":"[200] /about 7ms","label":null,"level":"info"}
+{"message":"[404] /images/about-poster.jpg 0ms","label":null,"level":"info"}
+{"message":"[404] /videos/about.mp4 0ms","label":null,"level":"info"}
+{"message":"[200] /clothing 4ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 11ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 14ms","label":null,"level":"info"}
+{"message":"[200] /about 8ms","label":null,"level":"info"}
+{"message":"[404] /images/about-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing 8ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 6ms","label":null,"level":"info"}
+{"message":"/src/pages/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] /clothing/hypnos-tee 25ms","label":null,"level":"info"}
+{"message":"/src/pages/clothing/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] /clothing/hypnos-tee 9ms","label":null,"level":"info"}
+{"message":"src/pages/clothing/[id].astro","label":"watch","level":"info"}
+{"message":"[200] /clothing/hypnos-tee 6ms","label":null,"level":"info"}
+{"message":"src/pages/clothing/[id].astro","label":"watch","level":"info"}
+{"message":"[200] /clothing/hypnos-tee 6ms","label":null,"level":"info"}
+{"message":"/src/pages/clothing/[id].astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] /clothing/hypnos-tee 5ms","label":null,"level":"info"}
+{"message":"[200] / 10ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 2ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 6ms","label":null,"level":"info"}
+{"message":"[200] /clothing 5ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 3ms","label":null,"level":"info"}
+{"message":"[200] / 18ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] / 6ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing/hypnos-tee 5ms","label":null,"level":"info"}
+{"message":"[200] /clothing 6ms","label":null,"level":"info"}
+{"message":"/src/pages/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] /clothing 27ms","label":null,"level":"info"}
+{"message":"src/pages/clothing/index.astro","label":"watch","level":"info"}
+{"message":"[200] /clothing 7ms","label":null,"level":"info"}
+{"message":"src/pages/clothing/index.astro","label":"watch","level":"info"}
+{"message":"[200] /clothing 8ms","label":null,"level":"info"}
+{"message":"src/pages/clothing/index.astro","label":"watch","level":"info"}
+{"message":"[200] /clothing 5ms","label":null,"level":"info"}
+{"message":"/src/pages/clothing/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] / 10ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing 2ms","label":null,"level":"info"}
+{"message":"/src/pages/clothing/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] /clothing/hypnos-tee 11ms","label":null,"level":"info"}
+{"message":"[200] /clothing 1ms","label":null,"level":"info"}
+{"message":"[200] / 4ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 2ms","label":null,"level":"info"}
+{"message":"[200] /cart 21ms","label":null,"level":"info"}
+{"message":"[200] /clothing 8ms","label":null,"level":"info"}
+{"message":"[200] /about 3ms","label":null,"level":"info"}
+{"message":"[404] /images/about-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] / 23ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 0ms","label":null,"level":"info"}
+{"message":"[200] /about 6ms","label":null,"level":"info"}
+{"message":"[404] /images/about-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"/src/pages/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"/src/pages/about.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] / 7ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 0ms","label":null,"level":"info"}
+{"message":"/src/pages/index.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"/src/pages/about.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] / 4ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 2ms","label":null,"level":"info"}
+{"message":"[200] /about 1ms","label":null,"level":"info"}
+{"message":"[404] /images/about-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing 9ms","label":null,"level":"info"}
+{"message":"[200] / 13ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /cart 4ms","label":null,"level":"info"}
+{"message":"[200] / 8ms","label":null,"level":"info"}
+{"message":"[404] /images/hero-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /about 5ms","label":null,"level":"info"}
+{"message":"[404] /images/about-poster.jpg 1ms","label":null,"level":"info"}
+{"message":"[200] /clothing 7ms","label":null,"level":"info"}
+{"message":"[200] /clothing 11ms","label":null,"level":"info"}

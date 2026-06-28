@@ -1,0 +1,318 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { products } from '../../data/products.js';
+---
+
+<Layout title="Clothing">
+  <div class="page-header">
+    <h1 class="page-title">CLOTHING</h1>
+    <p class="page-sub">SUMMER '26 COLLECTION</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="product-grid">
+    {products.map(product => {
+      const imgs = product.images ?? [product.image];
+      const multi = imgs.length > 1;
+      return (
+        <div class="product-card">
+          <div class="image-wrap" data-count={imgs.length}>
+
+            {/* Transparent clickable layer — covers image, sits above slides */}
+            <a
+              href={`/clothing/${product.id}`}
+              class="image-nav-link"
+              aria-label={`View ${product.name}`}
+            ></a>
+
+            {/* Slides */}
+            {imgs.map((src, i) => (
+              <img
+                src={src}
+                alt={i === 0 ? `${product.name} — front` : `${product.name} — back`}
+                class:list={['slide', { active: i === 0 }]}
+                loading="lazy"
+              />
+            ))}
+
+            {/* Left arrow */}
+            {multi && (
+              <button
+                class="arrow-btn arrow-prev"
+                data-visible="true"
+                aria-label="Previous view"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 17 1 9 9 1"></polyline>
+                </svg>
+              </button>
+            )}
+
+            {/* Right arrow */}
+            {multi && (
+              <button
+                class="arrow-btn arrow-next"
+                data-visible="true"
+                aria-label="Next view"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="1 17 9 9 1 1"></polyline>
+                </svg>
+              </button>
+            )}
+
+            {/* Dot indicators */}
+            {multi && (
+              <div class="slider-dots">
+                {imgs.map((_, i) => (
+                  <span class:list={['dot', { active: i === 0 }]}></span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <a href={`/clothing/${product.id}`} class="product-info">
+            <p class="product-name">{product.name}</p>
+            <p class="product-price">${product.price}</p>
+          </a>
+        </div>
+      );
+    })}
+  </section>
+</Layout>
+
+<script>
+  document.querySelectorAll('.image-wrap').forEach(wrap => {
+    const slides = Array.from(wrap.querySelectorAll('.slide'));
+    const dots = Array.from(wrap.querySelectorAll('.dot'));
+    const prevBtn = wrap.querySelector('.arrow-prev');
+    const nextBtn = wrap.querySelector('.arrow-next');
+    const count = slides.length;
+
+    if (count <= 1) return;
+
+    let current = 0;
+
+    function goTo(index) {
+      slides[current].classList.remove('active');
+      dots[current]?.classList.remove('active');
+      current = ((index % count) + count) % count;
+      slides[current].classList.add('active');
+      dots[current]?.classList.add('active');
+      if (prevBtn) prevBtn.dataset.visible = 'true';
+      if (nextBtn) nextBtn.dataset.visible = 'true';
+    }
+
+    prevBtn?.addEventListener('click', e => {
+      e.preventDefault();
+      goTo(current - 1);
+    });
+
+    nextBtn?.addEventListener('click', e => {
+      e.preventDefault();
+      goTo(current + 1);
+    });
+  });
+</script>
+
+<style>
+  /* ── Page header ── */
+  .page-header {
+    padding: 4rem 2rem 2.5rem;
+    text-align: center;
+  }
+
+  .page-label {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    color: var(--gray);
+    margin-bottom: 1rem;
+  }
+
+  .page-title {
+    font-family: var(--font-brand);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-sub {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: var(--gray);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin: 0 2rem 3.5rem;
+  }
+
+  /* ── Grid ── */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  /* ── Card ── */
+  .product-card {
+    display: block;
+  }
+
+  /* ── Image wrap (the Dior-style slider container) ── */
+  .image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  /* Transparent navigation link — sits above slides, below arrows */
+  .image-nav-link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: block;
+  }
+
+  /* ── Slides ── */
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    z-index: 0;
+  }
+
+  .slide.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  /* ── Arrow buttons ── */
+  .arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.88);
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, background 0.15s ease;
+  }
+
+  .arrow-btn svg {
+    width: 10px;
+    height: 18px;
+    stroke: #000;
+  }
+
+  .arrow-prev {
+    left: 10px;
+  }
+
+  .arrow-next {
+    right: 10px;
+  }
+
+  /* Show arrows on hover only when data-visible="true" */
+  .image-wrap:hover .arrow-btn[data-visible='true'] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .arrow-btn:hover {
+    background: rgba(255, 255, 255, 1);
+  }
+
+  /* ── Dot indicators ── */
+  .slider-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  .image-wrap:hover .slider-dots {
+    opacity: 1;
+  }
+
+  .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.22);
+    transition: background 0.2s;
+  }
+
+  .dot.active {
+    background: rgba(0, 0, 0, 0.75);
+  }
+
+  /* ── Product info (text link below image) ── */
+  .product-info {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .product-name {
+    font-family: var(--font-brand);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    margin-bottom: 0.4rem;
+    transition: opacity 0.2s;
+  }
+
+  .product-info:hover .product-name {
+    opacity: 0.6;
+  }
+
+  .product-price {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+  }
+
+  @media (max-width: 900px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .product-grid {
+      grid-template-columns: 1fr;
+      padding: 0 1.25rem 4rem;
+    }
+  }
+</style>

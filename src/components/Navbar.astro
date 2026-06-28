@@ -1,0 +1,246 @@
+---
+---
+
+<nav class="navbar">
+  <!-- Left: Hamburger + dropdown -->
+  <div class="nav-left">
+    <div class="menu-wrap">
+      <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <div class="menu-dropdown" id="menu-dropdown" aria-hidden="true">
+        <a href="/clothing" class="menu-item">CLOTHING</a>
+        <a href="/about" class="menu-item">ABOUT</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center: Brand name -->
+  <div class="nav-center">
+    <a href="/" class="nav-brand">CENTAURI LIFTING CLUB</a>
+  </div>
+
+  <!-- Right: Cart -->
+  <div class="nav-right">
+    <a href="/cart" class="cart-link" aria-label="Shopping Cart">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="cart-badge" id="cart-badge">0</span>
+    </a>
+  </div>
+</nav>
+
+<script>
+  import { getCartCount } from '../scripts/cart.js';
+
+  function updateBadge() {
+    const badge = document.getElementById('cart-badge');
+    if (!badge) return;
+    const count = getCartCount();
+    badge.textContent = String(count);
+    badge.style.opacity = count > 0 ? '1' : '0';
+  }
+
+  updateBadge();
+  window.addEventListener('cart-updated', updateBadge);
+
+  const menuBtn = document.getElementById('menu-btn');
+  const menuDropdown = document.getElementById('menu-dropdown');
+
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = menuDropdown.classList.contains('open');
+    menuDropdown.classList.toggle('open', !isOpen);
+    menuBtn.setAttribute('aria-expanded', String(!isOpen));
+    menuDropdown.setAttribute('aria-hidden', String(isOpen));
+  });
+
+  document.addEventListener('click', () => {
+    menuDropdown.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuDropdown.setAttribute('aria-hidden', 'true');
+  });
+
+  menuDropdown.addEventListener('click', (e) => e.stopPropagation());
+</script>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: var(--nav-height);
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-left,
+  .nav-right {
+    display: flex;
+    align-items: center;
+    min-width: 140px;
+  }
+
+  .nav-right {
+    justify-content: flex-end;
+  }
+
+  .nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .nav-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+
+  .nav-brand:hover {
+    opacity: 0.7;
+  }
+
+  /* ── Hamburger ── */
+  .menu-wrap {
+    position: relative;
+  }
+
+  .menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .bar {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: #fff;
+    transition: opacity 0.2s;
+  }
+
+  .menu-btn:hover .bar {
+    opacity: 0.55;
+  }
+
+  /* ── Dropdown ── */
+  .menu-dropdown {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 0;
+    background: #000;
+    min-width: 210px;
+    padding: 0.6rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+    z-index: 200;
+  }
+
+  .menu-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .menu-item {
+    display: block;
+    padding: 0.95rem 1.6rem;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .menu-item + .menu-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .menu-item:hover {
+    opacity: 0.55;
+  }
+
+  /* ── Cart ── */
+  .cart-link {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 4px;
+    transition: opacity 0.2s;
+  }
+
+  .cart-link:hover {
+    opacity: 0.7;
+  }
+
+  .cart-link svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -3px;
+    right: -7px;
+    background: #fff;
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  @media (max-width: 600px) {
+    .navbar {
+      padding: 0 1.25rem;
+    }
+
+    .nav-brand {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+    }
+
+    .nav-left,
+    .nav-right {
+      min-width: 60px;
+    }
+  }
+</style>

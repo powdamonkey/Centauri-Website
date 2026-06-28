@@ -1,0 +1,295 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { products } from '../../data/products.js';
+
+export function getStaticPaths() {
+  return products.map(product => ({
+    params: { id: product.id },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+---
+
+<Layout title={product.name}>
+  <div class="breadcrumb">
+    <a href="/clothing" class="breadcrumb-link">CLOTHING</a>
+    <span class="breadcrumb-sep">—</span>
+    <span class="breadcrumb-current">{product.name}</span>
+  </div>
+
+  <section class="product-detail">
+    <div class="product-image-col">
+      <img
+        src={product.image}
+        alt={product.name}
+        class="product-image"
+      />
+    </div>
+
+    <div class="product-info-col">
+      <p class="product-collection">{product.collection}</p>
+      <h1 class="product-name">{product.name}</h1>
+      <p class="product-price">${product.price}</p>
+
+      <div class="divider"></div>
+
+      <form
+        class="product-form"
+        data-product-id={product.id}
+        data-product-name={product.name}
+        data-product-price={product.price}
+        data-product-image={product.image}
+      >
+        <p class="size-label" id="size-label">SELECT SIZE</p>
+        <div class="size-selector">
+          {product.sizes.map(size => (
+            <label class="size-option">
+              <input type="radio" name="size" value={size} />
+              <span>{size}</span>
+            </label>
+          ))}
+        </div>
+
+        <button type="button" class="add-to-cart-btn" id="add-to-cart-btn">
+          ADD TO CART
+        </button>
+      </form>
+
+      <p class="product-desc">{product.description}</p>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { addToCart } from '../../scripts/cart.js';
+
+  const form = document.querySelector('.product-form');
+  const btn = document.getElementById('add-to-cart-btn');
+  const sizeLabel = document.getElementById('size-label');
+
+  btn.addEventListener('click', () => {
+    const sizeInput = form.querySelector('input[type="radio"]:checked');
+
+    if (!sizeInput) {
+      sizeLabel.classList.add('size-error');
+      sizeLabel.textContent = 'PLEASE SELECT A SIZE';
+      setTimeout(() => {
+        sizeLabel.classList.remove('size-error');
+        sizeLabel.textContent = 'SELECT SIZE';
+      }, 2200);
+      return;
+    }
+
+    addToCart({
+      id: form.dataset.productId,
+      name: form.dataset.productName,
+      price: parseFloat(form.dataset.productPrice),
+      image: form.dataset.productImage,
+      size: sizeInput.value,
+    });
+
+    btn.textContent = 'ADDED TO CART ✓';
+    btn.classList.add('added');
+    setTimeout(() => {
+      btn.textContent = 'ADD TO CART';
+      btn.classList.remove('added');
+    }, 2200);
+  });
+</script>
+
+<style>
+  /* ── Breadcrumb ── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 2rem 3rem;
+  }
+
+  .breadcrumb-link {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .breadcrumb-link:hover {
+    color: var(--black);
+  }
+
+  .breadcrumb-sep {
+    font-size: 10px;
+    color: var(--gray-light);
+  }
+
+  .breadcrumb-current {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    color: var(--black);
+  }
+
+  /* ── Product detail layout ── */
+  .product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - var(--nav-height) - 60px);
+  }
+
+  /* ── Image ── */
+  .product-image-col {
+    background: var(--cream);
+    overflow: hidden;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Info ── */
+  .product-info-col {
+    padding: 4rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--white);
+  }
+
+  .product-collection {
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: var(--gray);
+    margin-bottom: 1rem;
+  }
+
+  .product-name {
+    font-family: var(--font-brand);
+    font-size: clamp(26px, 3vw, 42px);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.75rem;
+  }
+
+  .product-price {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--gray);
+    margin-bottom: 2rem;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin-bottom: 2rem;
+  }
+
+  .product-desc {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.9;
+    letter-spacing: 0.03em;
+    color: #555;
+    max-width: 380px;
+    margin-top: 2rem;
+  }
+
+  /* ── Size selector ── */
+  .size-label {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.26em;
+    color: var(--gray);
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+  }
+
+  .size-label.size-error {
+    color: #c0392b;
+  }
+
+  .size-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .size-option input[type='radio'] {
+    display: none;
+  }
+
+  .size-option span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--gray-light);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+
+  .size-option span:hover {
+    border-color: #000;
+  }
+
+  .size-option input[type='radio']:checked + span {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+
+  /* ── Add to cart ── */
+  .add-to-cart-btn {
+    width: 100%;
+    max-width: 360px;
+    padding: 1rem 1rem;
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .add-to-cart-btn:hover {
+    opacity: 0.75;
+  }
+
+  .add-to-cart-btn.added {
+    background: #222;
+  }
+
+  @media (max-width: 900px) {
+    .product-detail {
+      grid-template-columns: 1fr;
+    }
+
+    .product-image-col {
+      min-height: 60vw;
+    }
+
+    .product-info-col {
+      padding: 3rem 2rem;
+    }
+
+    .breadcrumb {
+      padding: 1.5rem 2rem;
+    }
+  }
+</style>
