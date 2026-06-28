@@ -22,11 +22,33 @@ const { product } = Astro.props;
 
   <section class="product-detail">
     <div class="product-image-col">
-      <img
-        src={product.image}
-        alt={product.name}
-        class="product-image"
-      />
+      {(() => {
+        const imgs = product.images?.length ? product.images : [product.image];
+        return (
+          <div class="image-viewer">
+            <div class="thumbnail-strip">
+              {imgs.map((src, i) => (
+                <button
+                  type="button"
+                  class:list={['thumb-btn', { active: src === product.image }]}
+                  data-src={src}
+                  aria-label={`View ${i + 1}`}
+                >
+                  <img src={src} alt={`${product.name} view ${i + 1}`} loading="lazy" />
+                </button>
+              ))}
+            </div>
+            <div class="main-image-wrap">
+              <img
+                src={product.image}
+                alt={product.name}
+                class="main-image"
+                id="main-product-image"
+              />
+            </div>
+          </div>
+        );
+      })()}
     </div>
 
     <div class="product-info-col">
@@ -98,6 +120,23 @@ const { product } = Astro.props;
       btn.classList.remove('added');
     }, 2200);
   });
+
+  // Thumbnail switcher
+  const thumbBtns = document.querySelectorAll('.thumb-btn');
+  const mainImg = document.getElementById('main-product-image');
+
+  thumbBtns.forEach(thumbBtn => {
+    thumbBtn.addEventListener('click', () => {
+      if (!mainImg) return;
+      mainImg.style.opacity = '0';
+      setTimeout(() => {
+        mainImg.src = thumbBtn.dataset.src;
+        mainImg.style.opacity = '1';
+      }, 140);
+      thumbBtns.forEach(b => b.classList.remove('active'));
+      thumbBtn.classList.add('active');
+    });
+  });
 </script>
 
 <style>
@@ -141,17 +180,71 @@ const { product } = Astro.props;
     min-height: calc(100vh - var(--nav-height) - 60px);
   }
 
-  /* ── Image ── */
+  /* ── Image viewer ── */
   .product-image-col {
+    overflow: hidden;
+    min-height: calc(100vh - var(--nav-height) - 60px);
+  }
+
+  .image-viewer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    min-height: inherit;
+  }
+
+  /* Thumbnail strip */
+  .thumbnail-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 10px;
+    width: 88px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-right: 1px solid var(--gray-light);
+    overflow-y: auto;
+  }
+
+  .thumb-btn {
+    width: 66px;
+    height: 66px;
+    padding: 3px;
+    border: 1.5px solid var(--gray-light);
+    background: var(--white);
+    cursor: pointer;
+    transition: border-color 0.15s;
+    flex-shrink: 0;
+  }
+
+  .thumb-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .thumb-btn:hover {
+    border-color: #999;
+  }
+
+  .thumb-btn.active {
+    border-color: var(--black);
+  }
+
+  /* Main image */
+  .main-image-wrap {
+    flex: 1;
     background: var(--cream);
     overflow: hidden;
   }
 
-  .product-image {
+  .main-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: opacity 0.14s ease;
   }
 
   /* ── Info ── */
@@ -282,7 +375,37 @@ const { product } = Astro.props;
     }
 
     .product-image-col {
-      min-height: 60vw;
+      min-height: 0;
+    }
+
+    .image-viewer {
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .main-image-wrap {
+      aspect-ratio: 3 / 4;
+      height: auto;
+    }
+
+    .main-image {
+      height: auto;
+    }
+
+    .thumbnail-strip {
+      flex-direction: row;
+      width: 100%;
+      height: auto;
+      border-right: none;
+      border-top: 1px solid var(--gray-light);
+      padding: 10px 14px;
+      overflow-x: auto;
+      justify-content: center;
+    }
+
+    .thumb-btn {
+      width: 56px;
+      height: 56px;
     }
 
     .product-info-col {
