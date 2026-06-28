@@ -15,71 +15,143 @@ import Layout from '../layouts/Layout.astro';
 
     <div class="contact-divider"></div>
 
+    <!-- Success message — shown by Formspree on submit -->
+    <div data-fs-success class="form-success">
+      Your message has been sent. We'll be in touch soon.
+    </div>
+
+    <!-- Form-level error banner -->
+    <div data-fs-error class="form-error-banner"></div>
+
     <form class="contact-form" id="contact-form" novalidate>
       <div class="form-row">
         <div class="form-group">
           <label for="first-name" class="form-label">FIRST NAME</label>
-          <input type="text" id="first-name" name="first_name" class="form-input" required />
+          <input
+            type="text"
+            id="first-name"
+            name="first_name"
+            class="form-input"
+            required
+            data-fs-field
+          />
+          <span data-fs-error="first_name" class="field-error"></span>
         </div>
         <div class="form-group">
           <label for="last-name" class="form-label">LAST NAME</label>
-          <input type="text" id="last-name" name="last_name" class="form-input" required />
+          <input
+            type="text"
+            id="last-name"
+            name="last_name"
+            class="form-input"
+            required
+            data-fs-field
+          />
+          <span data-fs-error="last_name" class="field-error"></span>
         </div>
       </div>
 
       <div class="form-group">
         <label for="email" class="form-label">EMAIL ADDRESS</label>
-        <input type="email" id="email" name="email" class="form-input" required />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-input"
+          required
+          data-fs-field
+        />
+        <span data-fs-error="email" class="field-error"></span>
       </div>
 
       <div class="form-group">
         <label for="subject" class="form-label">SUBJECT</label>
-        <input type="text" id="subject" name="subject" class="form-input" />
+        <input
+          type="text"
+          id="subject"
+          name="subject"
+          class="form-input"
+          data-fs-field
+        />
+        <span data-fs-error="subject" class="field-error"></span>
       </div>
 
       <div class="form-group">
         <label for="message" class="form-label">MESSAGE</label>
-        <textarea id="message" name="message" class="form-input form-textarea" rows="6" required></textarea>
+        <textarea
+          id="message"
+          name="message"
+          class="form-input form-textarea"
+          rows="6"
+          required
+          data-fs-field
+        ></textarea>
+        <span data-fs-error="message" class="field-error"></span>
       </div>
 
-      <button type="submit" class="submit-btn">SEND MESSAGE</button>
-
-      <p class="form-success" id="form-success">
-        Your message has been sent. We'll be in touch soon.
-      </p>
+      <button type="submit" class="submit-btn" data-fs-submit-btn>
+        SEND MESSAGE
+      </button>
     </form>
 
   </div>
 </Layout>
 
 <script>
-  const form = document.getElementById('contact-form');
-  const success = document.getElementById('form-success');
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const successEl = document.querySelector('[data-fs-success]') as HTMLElement;
+  const formErrorEl = document.querySelector('[data-fs-error]:not([data-fs-error=""])') as HTMLElement;
+  const submitBtn = form.querySelector('[data-fs-submit-btn]') as HTMLButtonElement;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const required = form.querySelectorAll('[required]');
-    let valid = true;
 
-    required.forEach(field => {
-      if (!field.value.trim()) {
-        field.classList.add('error');
-        valid = false;
-      } else {
-        field.classList.remove('error');
+    // Clear previous errors
+    formErrorEl.textContent = '';
+    form.querySelectorAll('[data-fs-error][data-fs-error!=""]').forEach(el => (el as HTMLElement).textContent = '');
+    form.querySelectorAll('[data-fs-field]').forEach(el => el.removeAttribute('aria-invalid'));
+
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'SENDING…';
+
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch('https://formspree.io/f/xzdlgonv', {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+      const json = await res.json();
+
+      if (res.ok) {
+        form.style.display = 'none';
+        successEl.style.display = 'block';
+        return;
       }
-    });
 
-    if (!valid) return;
-
-    // Replace the form with the success message
-    form.style.display = 'none';
-    success.style.display = 'block';
-  });
-
-  // Clear error state on input
-  form.querySelectorAll('.form-input').forEach(input => {
-    input.addEventListener('input', () => input.classList.remove('error'));
+      // Field / form errors from Formspree
+      if (json.errors) {
+        json.errors.forEach((err: { field?: string; message: string }) => {
+          if (err.field) {
+            const fieldEl = form.querySelector(`[data-fs-error="${err.field}"]`) as HTMLElement | null;
+            if (fieldEl) fieldEl.textContent = err.message;
+            const input = form.querySelector(`[name="${err.field}"]`);
+            if (input) input.setAttribute('aria-invalid', 'true');
+          } else {
+            formErrorEl.textContent = err.message;
+          }
+        });
+      } else {
+        formErrorEl.textContent = json.error || 'Something went wrong. Please try again.';
+      }
+    } catch {
+      formErrorEl.textContent = 'Network error. Please try again.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
   });
 </script>
 
@@ -118,6 +190,25 @@ import Layout from '../layouts/Layout.astro';
     margin-bottom: 3.5rem;
   }
 
+  /* ── Success / error banners ── */
+  [data-fs-success] {
+    display: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    padding: 4rem 0;
+    line-height: 1.9;
+  }
+
+  .form-error-banner:not(:empty) {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: #c0392b;
+    margin-bottom: 1.5rem;
+  }
+
   /* ── Form layout ── */
   .contact-form {
     display: flex;
@@ -145,7 +236,7 @@ import Layout from '../layouts/Layout.astro';
     color: var(--gray);
   }
 
-  /* ── Inputs — Fear of God underline style ── */
+  /* ── Inputs — underline style ── */
   .form-input {
     width: 100%;
     background: transparent;
@@ -167,13 +258,22 @@ import Layout from '../layouts/Layout.astro';
     border-bottom-color: var(--black);
   }
 
-  .form-input.error {
+  /* Formspree sets aria-invalid="true" on fields with errors */
+  .form-input[aria-invalid='true'] {
     border-bottom-color: #c0392b;
   }
 
   .form-textarea {
     resize: none;
     line-height: 1.8;
+  }
+
+  /* ── Field-level errors ── */
+  .field-error:not(:empty) {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: #c0392b;
+    margin-top: 0.25rem;
   }
 
   /* ── Submit ── */
@@ -196,16 +296,10 @@ import Layout from '../layouts/Layout.astro';
     opacity: 0.75;
   }
 
-  /* ── Success ── */
-  .form-success {
-    display: none;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: 0.06em;
-    color: var(--gray);
-    padding: 4rem 0;
-    line-height: 1.9;
+  /* Formspree disables the button during submission */
+  .submit-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
   }
 
   @media (max-width: 600px) {
