@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact">
+  <div class="contact-page">
+
+    <div class="contact-header">
+      <h1 class="contact-title">CONTACT</h1>
+      <p class="contact-sub">
+        Questions about an order, a product, or just want to reach out?<br />
+        Send us a message and we'll get back to you shortly.
+      </p>
+    </div>
+
+    <div class="contact-divider"></div>
+
+    <form class="contact-form" id="contact-form" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name" class="form-label">FIRST NAME</label>
+          <input type="text" id="first-name" name="first_name" class="form-input" required />
+        </div>
+        <div class="form-group">
+          <label for="last-name" class="form-label">LAST NAME</label>
+          <input type="text" id="last-name" name="last_name" class="form-input" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">EMAIL ADDRESS</label>
+        <input type="email" id="email" name="email" class="form-input" required />
+      </div>
+
+      <div class="form-group">
+        <label for="subject" class="form-label">SUBJECT</label>
+        <input type="text" id="subject" name="subject" class="form-input" />
+      </div>
+
+      <div class="form-group">
+        <label for="message" class="form-label">MESSAGE</label>
+        <textarea id="message" name="message" class="form-input form-textarea" rows="6" required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">SEND MESSAGE</button>
+
+      <p class="form-success" id="form-success">
+        Your message has been sent. We'll be in touch soon.
+      </p>
+    </form>
+
+  </div>
+</Layout>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const required = form.querySelectorAll('[required]');
+    let valid = true;
+
+    required.forEach(field => {
+      if (!field.value.trim()) {
+        field.classList.add('error');
+        valid = false;
+      } else {
+        field.classList.remove('error');
+      }
+    });
+
+    if (!valid) return;
+
+    // Replace the form with the success message
+    form.style.display = 'none';
+    success.style.display = 'block';
+  });
+
+  // Clear error state on input
+  form.querySelectorAll('.form-input').forEach(input => {
+    input.addEventListener('input', () => input.classList.remove('error'));
+  });
+</script>
+
+<style>
+  .contact-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 5rem 2rem 8rem;
+  }
+
+  /* ── Header ── */
+  .contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .contact-title {
+    font-family: var(--font-brand);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-sub {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.9;
+    letter-spacing: 0.04em;
+    color: #666;
+  }
+
+  .contact-divider {
+    height: 1px;
+    background: var(--gray-light);
+    margin-bottom: 3.5rem;
+  }
+
+  /* ── Form layout ── */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  /* ── Labels ── */
+  .form-label {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.26em;
+    color: var(--gray);
+  }
+
+  /* ── Inputs — Fear of God underline style ── */
+  .form-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--gray-light);
+    padding: 0.6rem 0;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--black);
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 0;
+    -webkit-appearance: none;
+  }
+
+  .form-input:focus {
+    border-bottom-color: var(--black);
+  }
+
+  .form-input.error {
+    border-bottom-color: #c0392b;
+  }
+
+  .form-textarea {
+    resize: none;
+    line-height: 1.8;
+  }
+
+  /* ── Submit ── */
+  .submit-btn {
+    align-self: flex-start;
+    padding: 1rem 3.5rem;
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.26em;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover {
+    opacity: 0.75;
+  }
+
+  /* ── Success ── */
+  .form-success {
+    display: none;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    padding: 4rem 0;
+    line-height: 1.9;
+  }
+
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+    }
+
+    .submit-btn {
+      align-self: stretch;
+      text-align: center;
+    }
+  }
+</style>
