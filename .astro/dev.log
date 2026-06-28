@@ -126,3 +126,10 @@
 {"message":"[404] /images/about-poster.jpg 1ms","label":null,"level":"info"}
 {"message":"[200] /clothing 7ms","label":null,"level":"info"}
 {"message":"[200] /clothing 11ms","label":null,"level":"info"}
+{"message":"Configuration file updated. Restarting...","label":null,"level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"/src/layouts/Layout.astro?astro&type=style&index=0&lang.css","label":"watch","level":"info"}
+{"message":"[200] /clothing 7ms","label":null,"level":"info"}
+{"message":"connected.","label":"vite","level":"info"}
+{"message":"Re-optimizing dependencies because vite config has changed","label":"vite","level":"info"}
+{"message":"server restarted.","label":"vite","level":"info"}
