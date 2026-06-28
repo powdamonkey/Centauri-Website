@@ -24,7 +24,7 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cardo:wght@400&family=Inter:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -43,9 +43,20 @@ const {
     padding: 0;
   }
 
-  .lambda {
-    font-family: 'Cardo', serif;
-    font-weight: 400;
+  /* Cinzel "A" with crossbar removed via clip-path polygon.
+     The polygon is an H-shape: full-width above/below the crossbar zone,
+     narrow columns only at the crossbar height so the diagonals stay intact. */
+  .lambda-a {
+    display: inline-block;
+    line-height: 1;
+    /* Crossbar sits at ~42–51% of element height (Cinzel cap metrics + line-height:1).
+       Diagonal strokes cross that zone at ~26% from left and ~74% from right. */
+    clip-path: polygon(
+      0% 0%, 100% 0%,
+      100% 42%, 74% 42%, 74% 51%, 100% 51%,
+      100% 100%, 0% 100%,
+      0% 51%, 26% 51%, 26% 42%, 0% 42%
+    );
   }
 
   :root {
